@@ -4,23 +4,30 @@ commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
-      # Add parameter here   
+      # Add parameter here, make sure it is correct
+      to:
+        type: string
+        default: "Destroying environment"  
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
             # Your code here
-            exit 1
+            echo << parameters.to >>
 
   revert-migrations:
-    description: Revert ßthe last migration if successfully run in the current workflow.
+    description: Revert the last migration if successfully run in the current workflow.
     parameters:
-      # Add parameter here     
+      # Add parameter here
+      to:
+        type: string
+        default: "Reverting last migration"     
     steps:
       - run:
           name: Revert migrations
           # Add when this will run
+          when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS = 1
@@ -44,7 +51,11 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
-            exit 1
+            echo Building frontend
+            cd frontend
+            npm install
+            npm run lint
+            # Add more? These are the ones in Lesson 3 Part 5 Creating jobs
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -60,7 +71,11 @@ jobs:
           name: Back-end build
           command: |
              # Your code here
-             exit 1
+             echo Building backend
+             cd backend
+             npm install
+             npm run lint
+             # Add more. Need to verify if only lint is needed
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
