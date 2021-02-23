@@ -54,8 +54,8 @@ jobs:
             echo Building frontend
             cd frontend
             npm install
-            npm run lint
-            # Add more? These are the ones in Lesson 3 Part 5 Creating jobs
+            npm run build
+            # Add more? Since this is frontend also changed from lint -> build
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -74,8 +74,8 @@ jobs:
              echo Building backend
              cd backend
              npm install
-             npm run lint
-             # Add more. Need to verify if only lint is needed
+             npm run build
+             # Add more? Changed from npm run lint to build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
