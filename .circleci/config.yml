@@ -89,18 +89,18 @@ jobs:
       # Restore from cache
       # Your job code here
       - checkout
-      - restore-cache:
-        keys: [frontend-build]
+      - restore_cache:
+          keys: [frontend-build]
       - run:
-        name: Front-end testing
-        command: |
-          echo Testing frontend
-          cd frontend
-          npm install
-          npm run test
-      - save-cache:
-        paths: [frontend/node_modules]
-        key: frontend-build
+          name: Front-end testing
+          command: |
+            echo Testing frontend
+            cd frontend
+            npm install
+            npm run test
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
 
                 
   test-backend:
@@ -112,18 +112,18 @@ jobs:
       # Restore from cache
       # Your job code here
       - checkout
-      - restore-cache:
-        keys: [backend-build]
+      - restore_cache:
+          keys: [backend-build]
       - run:
-        name: Back-end testing
-        command: |
-          echo Testing backend
-          cd backend
-          npm install
-          npm run test
-      - save-cache:
-        paths: [backend/node_modules]
-        key: backend-build
+          name: Back-end testing
+          command: |
+            echo Testing backend
+            cd backend
+            npm install
+            npm run test
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-build
             
 #   scan-frontend:
 #     docker:
