@@ -181,6 +181,7 @@ jobs:
       - run: echo ${CIRCLE_WORKFLOW_ID} >> user.txt
       - run: aws --version >> user.txt
       - run: cat user.txt
+      - run: yum -y install tar gzip
       - run:
           name: Ensure back-end infrastructure exists
           # "your back-end stack name with workflow id" 
@@ -210,7 +211,7 @@ jobs:
           command: |
             # Your code here
             curl -H "token: eac2ea29-bdc1-4589-aed6-99662283a15f" \
-              --request GET https://api.memstash.io/values/${CIRCLE_WORKFLOW_ID} \
+              --request GET https://api.memstash.io/values/url_${CIRCLE_WORKFLOW_ID} \
               >> .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
