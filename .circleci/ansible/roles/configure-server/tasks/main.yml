@@ -11,9 +11,9 @@
   debug:
     msg: "{{ lookup('env', 'TYPEORM_HOST') | default('nothing', True) }}"
 
-- name: lookup basic usage for HOME
-  debug:
-    msg: "{{ lookup('env', 'HOME') | default('nothing', True) }}"
+# - name: Check ansible version Ansible has not been installed so it will throw an error.
+#   shell:
+#     cmd: ansible --version
 
 - name: "upgrade packages."
   become: true

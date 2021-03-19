@@ -20,9 +20,15 @@
       raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
       changed_when: false
 
+    - name: Just a test
+      debug:
+        msg: "'{{ lookup('env', 'TYPEORM_HOST') | default('nothing', True) }}' is the TYPEORM_HOST."
+
     - name: Print all available facts
       ansible.builtin.debug:
         var: ansible_facts
+      environment:
+        http: http 
 
     - name: Example how to set default value if the variable is not defined
       debug:
@@ -33,3 +39,13 @@
     # - configure-prometheus-node-exporter
     - configure-server
     # - deploy
+
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_ENTITIES: "{{ lookup('env','TYPEORM_ENTITIES') }}"
+    TYPEORM_HOST: "{{ lookup('env','TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env','TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env','TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env','TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env','TYPEORM_DATABASE') }}"
