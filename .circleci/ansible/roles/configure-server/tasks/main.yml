@@ -1,0 +1,36 @@
+## Back-end server configuration playbook goes here.
+- name: Print env variable
+  shell: echo $PATH
+  register: print_result
+
+- name: print message
+  debug:
+    msg: "{{ print_result.stdout_lines }}"
+
+- name: lookup basic usage for TYPEORM_HOST
+  debug:
+    msg: "{{ lookup('env', 'TYPEORM_HOST') | default('nothing', True) }}"
+
+- name: lookup basic usage for HOME
+  debug:
+    msg: "{{ lookup('env', 'HOME') | default('nothing', True) }}"
+
+- name: "upgrade packages."
+  become: true
+  apt:
+    upgrade: "yes"
+
+- name: "install dependencies."
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "install pm2"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
